@@ -1,21 +1,24 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import { MapContainer, TileLayer, GeoJSON } from "react-leaflet"
 import "leaflet/dist/leaflet.css"
-import geojsonData from "./assets/ExampleBorders.geojson"
+// @ts-expect-error: JS file without types
+import shape from "./assets/areas/shape_0.js"
+// @ts-expect-error: JS file without types
+import borders from "./assets/ExampleBorders.js"
 
 const MapComponent: React.FC = () => {
   return (
     <MapContainer
-      center={[61.4978, 23.761]}
-      zoom={11}
+      center={[65.4978, 26.761]}
+      zoom={5}
       scrollWheelZoom={true}
-      style={{ height: "calc(100vh - 100px)", width: "100%" }}
+      style={{ height: "90vh", width: "100%" }}
     >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
-      <GeoJSON data={geojsonData} />
+      <GeoJSON data={shape} />
     </MapContainer>
   )
 }

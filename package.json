@@ -11,6 +11,7 @@
     "start": "nodemon"
   },
   "dependencies": {
+    "@turf/turf": "^7.1.0",
     "@types/geojson": "^7946.0.15",
     "express": "^4.19.2",
     "leaflet": "^1.9.4",

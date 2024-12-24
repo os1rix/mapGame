@@ -6,7 +6,6 @@ const AnswerBar = () => {
       <form className="flex justify-center">
         <input
           type="text"
-          placeholder="_ _ _ _ _ _"
           className="w-full p-2 border border-gray-300 rounded"
         />
       </form>
