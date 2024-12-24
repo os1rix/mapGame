@@ -1,13 +1,20 @@
-import Start from "./Start.tsx";
-import AnswerBar from "./AnswerBar.tsx";
+import React, { useState, useEffect } from "react"
+import Start from "./Start.tsx"
+import GameBox from "./GameBox.tsx"
 
 function App() {
+  const [showAnswerBar, setShowAnswerBar] = useState(false)
+
+  const handleStartClick = () => {
+    setShowAnswerBar(true)
+  }
+
   return (
     <>
-      <Start />
-      <AnswerBar />
+      {!showAnswerBar && <Start onStartClick={handleStartClick} />}
+      {showAnswerBar && <GameBox />}
     </>
-  );
+  )
 }
 
-export default App;
+export default App
