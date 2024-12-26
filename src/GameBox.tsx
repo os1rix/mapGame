@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { Feature, Geometry, GeoJsonProperties } from "geojson"
 import AnswerBar from "./AnswerBar"
 import MapComponent from "./MapComponent"
+//@ts-expect-error works just fine :D
 import csvData from "./assets/Coordinates_with_shapes.js"
 console.log(csvData)
 
@@ -30,6 +31,10 @@ const GameBox = () => {
   const [feedback, setFeedback] = useState<string>("")
   const [feedbackVisible, setFeedbackVisible] = useState(false)
 
+  const [selectedCountries, setSelectedCountries] = useState<Set<number>>(
+    new Set()
+  ) // Track selected countries
+
   useEffect(() => {
     // Parse the CSV data
     console.log(csvData)
@@ -45,12 +50,25 @@ const GameBox = () => {
           latLng: parseCoordinates(coordinates),
         }
       })
-      .filter((data) => data.shapes.every((shape) => !isNaN(shape))) // Filter out any invalid entries
+      .filter((data: CountryData) =>
+        data.shapes.every((shape) => !isNaN(shape))
+      ) // Filter out any invalid entries
     setCountryData(parsedData)
   }, [])
 
   const showRandomShape = async () => {
-    const randomIndex = Math.floor(Math.random() * countryData.length)
+    // Ensure the country hasn't been selected yet
+    if (selectedCountries.size >= countryData.length) {
+      setSelectedCountries(new Set())
+    }
+
+    let randomIndex
+    do {
+      randomIndex = Math.floor(Math.random() * countryData.length)
+    } while (selectedCountries.has(randomIndex))
+
+    selectedCountries.add(randomIndex)
+    setSelectedCountries(new Set(selectedCountries))
     const selectedCountry = countryData[randomIndex]
 
     try {
