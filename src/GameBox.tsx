@@ -4,7 +4,6 @@ import AnswerBar from "./AnswerBar"
 import MapComponent from "./MapComponent"
 //@ts-expect-error works just fine :D
 import csvData from "./assets/Coordinates_with_shapes.js"
-console.log(csvData)
 
 const shapeFiles = Array.from({ length: 468 }, (_, i) => i).map(
   (num) => () => import(`./assets/areas/shape_${num}.js`)
@@ -30,6 +29,7 @@ const GameBox = () => {
   const [guess, setGuess] = useState<string>("")
   const [feedback, setFeedback] = useState<string>("")
   const [feedbackVisible, setFeedbackVisible] = useState(false)
+  const [attempts, setAttempts] = useState<number>(0)
 
   const [selectedCountries, setSelectedCountries] = useState<Set<number>>(
     new Set()
@@ -37,7 +37,6 @@ const GameBox = () => {
 
   useEffect(() => {
     // Parse the CSV data
-    console.log(csvData)
     const parsedData = csvData
       .split("\n")
       .slice(1) // Skip header
@@ -61,6 +60,7 @@ const GameBox = () => {
     if (selectedCountries.size >= countryData.length) {
       setSelectedCountries(new Set())
     }
+    setAttempts(0)
 
     let randomIndex
     do {
@@ -91,10 +91,20 @@ const GameBox = () => {
   }
 
   const handleGuess = () => {
-    if (guess.toLowerCase() === currentCountry?.country.trim().toLowerCase()) {
+    setAttempts((prev) => prev + 1)
+    console.log(attempts)
+    if (
+      guess.trim().toLowerCase() ===
+      currentCountry?.country.trim().toLowerCase()
+    ) {
       setFeedback("Correct!")
     } else {
-      setFeedback("Try again!")
+      if (attempts >= 1) {
+        // Check if it's the second attempt
+        setFeedback(`The country is ${currentCountry?.country}.`)
+      } else {
+        setFeedback("Try again!")
+      }
     }
     setFeedbackVisible(true)
     setTimeout(() => {

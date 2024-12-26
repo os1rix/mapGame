@@ -23,13 +23,13 @@ const AnswerBar: React.FC<AnswerBarProps> = ({
       <div className="flex justify-between mb-2">
         <button
           onClick={showRandomShape}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-1 rounded"
         >
           Show Random Country
         </button>
         <button
           onClick={handleGuess}
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mx-1 rounded"
         >
           Submit Guess
         </button>
