@@ -623,3 +623,5 @@ const shape_180 = {
   },
   "properties": {}
 };
+
+export default shape_180;

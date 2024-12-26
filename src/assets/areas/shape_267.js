@@ -1991,3 +1991,5 @@ const shape_267 = {
   },
   "properties": {}
 };
+
+export default shape_267;

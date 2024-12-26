@@ -1903,3 +1903,5 @@ const shape_387 = {
   },
   "properties": {}
 };
+
+export default shape_387;

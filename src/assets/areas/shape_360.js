@@ -259,3 +259,5 @@ const shape_360 = {
   },
   "properties": {}
 };
+
+export default shape_360;

@@ -35,3 +35,6 @@ export const shape_1 = {
   },
   properties: {},
 }
+
+
+export default shape_1;

@@ -503,3 +503,5 @@ const shape_426 = {
   },
   "properties": {}
 };
+
+export default shape_426;

@@ -391,3 +391,5 @@ const shape_409 = {
   },
   "properties": {}
 };
+
+export default shape_409;

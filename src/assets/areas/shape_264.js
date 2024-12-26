@@ -211,3 +211,5 @@ const shape_264 = {
   },
   "properties": {}
 };
+
+export default shape_264;

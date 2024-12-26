@@ -771,3 +771,5 @@ const shape_6 = {
   },
   "properties": {}
 };
+
+export default shape_6;

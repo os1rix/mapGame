@@ -155,3 +155,5 @@ const shape_365 = {
   },
   "properties": {}
 };
+
+export default shape_365;

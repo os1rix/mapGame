@@ -211,3 +211,5 @@ const shape_376 = {
   },
   "properties": {}
 };
+
+export default shape_376;

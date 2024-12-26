@@ -128,3 +128,6 @@ export const shape_2 = {
   },
   properties: {},
 }
+
+
+export default shape_2;

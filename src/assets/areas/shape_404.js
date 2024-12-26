@@ -191,3 +191,5 @@ const shape_404 = {
   },
   "properties": {}
 };
+
+export default shape_404;

@@ -555,3 +555,5 @@ const shape_90 = {
   },
   "properties": {}
 };
+
+export default shape_90;

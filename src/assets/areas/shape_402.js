@@ -459,3 +459,5 @@ const shape_402 = {
   },
   "properties": {}
 };
+
+export default shape_402;

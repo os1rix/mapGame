@@ -607,3 +607,5 @@ const shape_80 = {
   },
   "properties": {}
 };
+
+export default shape_80;

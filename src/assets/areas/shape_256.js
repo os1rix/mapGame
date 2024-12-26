@@ -231,3 +231,5 @@ const shape_256 = {
   },
   "properties": {}
 };
+
+export default shape_256;

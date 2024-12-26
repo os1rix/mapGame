@@ -335,3 +335,5 @@ const shape_334 = {
   },
   "properties": {}
 };
+
+export default shape_334;

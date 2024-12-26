@@ -807,3 +807,5 @@ const shape_47 = {
   },
   "properties": {}
 };
+
+export default shape_47;

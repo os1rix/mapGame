@@ -167,3 +167,5 @@ const shape_429 = {
   },
   "properties": {}
 };
+
+export default shape_429;

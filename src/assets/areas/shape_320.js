@@ -499,3 +499,5 @@ const shape_320 = {
   },
   "properties": {}
 };
+
+export default shape_320;

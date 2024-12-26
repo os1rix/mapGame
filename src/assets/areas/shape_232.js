@@ -535,3 +535,5 @@ const shape_232 = {
   },
   "properties": {}
 };
+
+export default shape_232;

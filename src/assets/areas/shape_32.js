@@ -163,3 +163,5 @@ const shape_32 = {
   },
   "properties": {}
 };
+
+export default shape_32;

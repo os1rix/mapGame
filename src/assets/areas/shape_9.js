@@ -639,3 +639,5 @@ const shape_9 = {
   },
   "properties": {}
 };
+
+export default shape_9;

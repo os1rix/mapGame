@@ -115,3 +115,5 @@ const shape_137 = {
   },
   "properties": {}
 };
+
+export default shape_137;

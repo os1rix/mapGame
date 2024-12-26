@@ -463,3 +463,5 @@ const shape_301 = {
   },
   "properties": {}
 };
+
+export default shape_301;

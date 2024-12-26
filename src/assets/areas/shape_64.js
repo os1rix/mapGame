@@ -415,3 +415,5 @@ const shape_64 = {
   },
   "properties": {}
 };
+
+export default shape_64;

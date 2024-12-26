@@ -73,3 +73,6 @@ export const shape_4 = {
   },
   properties: {},
 }
+
+
+export default shape_4;
