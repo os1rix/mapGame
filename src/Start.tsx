@@ -1,5 +1,3 @@
-import React from "react"
-
 const Start = ({ onStartClick }: { onStartClick: () => void }) => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">

@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import Start from "./Start.tsx"
 import GameBox from "./GameBox.tsx"
 
