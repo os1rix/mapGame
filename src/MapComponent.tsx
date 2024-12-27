@@ -53,31 +53,44 @@ const MapComponent: React.FC<MapComponentProps> = ({
           url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
-        {currentShape.map((shape, index) => (
-          <GeoJSON key={`${shapeName}-${index}`} data={shape} />
-        ))}
-        {rightCountries.map((shape, index) => (
-          <GeoJSON
-            key={`${shapeName}-${index}`}
-            data={shape}
-            style={() => ({
-              color: "green",
-              weight: 2,
-              opacity: 1,
-            })}
-          />
-        ))}
-        {wrongCountries.map((shape, index) => (
-          <GeoJSON
-            key={`${shapeName}-${index}`}
-            data={shape}
-            style={() => ({
-              color: "red",
-              weight: 2,
-              opacity: 1,
-            })}
-          />
-        ))}
+        {currentShape.map(
+          (shape, index) =>
+            isValidGeoJSON(shape) && (
+              <GeoJSON key={`${shapeName}-${index}`} data={shape} />
+            )
+        )}
+        {rightCountries.map(
+          (shape, index) =>
+            isValidGeoJSON(shape) && (
+              <GeoJSON
+                key={`${shapeName}-${index}`}
+                data={shape}
+                style={() => ({
+                  color: "green",
+                  weight: 2,
+                  opacity: 1,
+                  fillColor: "green",
+                  fillOpacity: 0.5,
+                })}
+              />
+            )
+        )}
+        {wrongCountries.map(
+          (shape, index) =>
+            isValidGeoJSON(shape) && (
+              <GeoJSON
+                key={`${shapeName}-${index}`}
+                data={shape}
+                style={() => ({
+                  color: "red",
+                  weight: 2,
+                  opacity: 1,
+                  fillColor: "red",
+                  fillOpacity: 0.5,
+                })}
+              />
+            )
+        )}
         <GeoJSON
           data={borders}
           style={() => ({

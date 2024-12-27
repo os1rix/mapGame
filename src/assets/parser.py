@@ -1,4 +1,5 @@
 import os
+import json
 
 def add_export_statements(folder_path):
     # Iterate through all files in the given folder
@@ -14,13 +15,26 @@ def add_export_statements(folder_path):
             with open(file_path, 'r') as file:
                 content = file.read()
             
-            # Append the export statement
-            export_statement = f"\n\nexport default {export_name};"
-            content += export_statement
+            # Load the content as JSON
+            try:
+                geojson_data = json.loads(content)
+            except json.JSONDecodeError:
+                print(f"Error decoding JSON in file: {filename}")
+                continue
             
+            # Check if the geometry type is LineString and convert to Polygon
+            if geojson_data.get("geometry", {}).get("type") == "LineString":
+                # Wrap the coordinates in an additional array
+                geojson_data["geometry"]["type"] = "Polygon"
+                geojson_data["geometry"]["coordinates"] = [
+                    geojson_data["geometry"]["coordinates"]
+                ]
+            
+            # Convert back to JSON string
+            updated_content = json.dumps(geojson_data, indent=2)
             # Write back to the file
             with open(file_path, 'w') as file:
-                file.write(content)
+                file.write(updated_content)
             
             print(f"Processed file: {filename}")
 

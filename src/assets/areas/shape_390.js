@@ -1,7 +1,7 @@
 const shape_390 = {
   "type": "Feature",
   "geometry": {
-    "type": "LineString",
+    "type": "Polygon",
     "coordinates": [
       [
         26.096663,

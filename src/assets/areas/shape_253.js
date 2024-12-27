@@ -1,7 +1,7 @@
 const shape_253 = {
   "type": "Feature",
   "geometry": {
-    "type": "LineString",
+    "type": "Polygon",
     "coordinates": [
       [
         21.396736,
