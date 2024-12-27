@@ -23,13 +23,13 @@ const AnswerBar: React.FC<AnswerBarProps> = ({
       <div className="flex justify-between mb-2">
         <button
           onClick={showRandomShape}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-1 rounded"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 mx-1 rounded"
         >
           Show Random Town
         </button>
         <button
           onClick={handleGuess}
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mx-1 rounded"
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-3 mx-1 rounded"
         >
           Submit Guess
         </button>
@@ -39,7 +39,7 @@ const AnswerBar: React.FC<AnswerBarProps> = ({
           type="text"
           value={guess}
           onChange={(e) => setGuess(e.target.value)}
-          placeholder="Guess the country"
+          placeholder="Guess the town"
           className="w-full p-2 border border-gray-300 rounded"
         />
       </form>

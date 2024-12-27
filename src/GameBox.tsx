@@ -45,6 +45,9 @@ const GameBox = () => {
     Feature<Geometry, GeoJsonProperties>[]
   >([])
   const [answered, setAnswered] = useState<boolean>(true)
+  const [tileLayerUrl, setTileLayerUrl] = useState<string>(
+    "https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png"
+  )
 
   useEffect(() => {
     // Parse the CSV data
@@ -81,7 +84,12 @@ const GameBox = () => {
     setGuess("")
     // Ensure the country hasn't been selected yet
     if (selectedCountries.size >= countryData.length) {
-      setSelectedCountries(new Set())
+      setFeedbackVisible(true)
+      setFeedback("Nice job!\nReload the page to play again!")
+      setTimeout(() => {
+        setFeedbackVisible(false)
+      }, 4000)
+      return
     }
 
     let randomIndex
@@ -120,14 +128,19 @@ const GameBox = () => {
       currentCountry?.country.trim().toLowerCase()
     ) {
       setFeedback("Correct!")
+      if (!answered) {
+        setRightCountries((prev) => [...prev, ...currentShape])
+      }
       setAnswered(true)
-      setRightCountries((prev) => [...prev, ...currentShape])
     } else {
-      if (attempts >= 1) {
+      if (attempts == 1) {
         // Check if it's the second attempt
         setFeedback(`The town is ${currentCountry?.country}.`)
         setWrongCountries((prev) => [...prev, ...currentShape])
         setAnswered(true)
+        console.log(wrongCountries)
+      } else if (attempts > 1) {
+        setFeedback(`The town is ${currentCountry?.country}.`)
       } else {
         setFeedback("Try again!")
       }
@@ -153,8 +166,17 @@ const GameBox = () => {
     }
   }
 
+  const changeTileLayer = () => {
+    setTileLayerUrl((prevUrl) =>
+      prevUrl ===
+      "https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png"
+        ? "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+        : "https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png"
+    )
+  }
+
   return (
-    <div className="relative h-screen flex flex-col">
+    <div className="grid grid-cols-1">
       <div className="flex-[1_1_100%] overflow-hidden">
         <MapComponent
           currentShape={currentShape}
@@ -163,6 +185,7 @@ const GameBox = () => {
           borders={bordersData}
           wrongCountries={wrongCountries}
           rightCountries={rightCountries}
+          tileLayerUrl={tileLayerUrl}
         />
         {feedbackVisible && (
           <div
@@ -171,12 +194,16 @@ const GameBox = () => {
             {feedback}
           </div>
         )}
-        <div
-          className={
-            "absolute top-4 right-4 z-[1000] bg-white p-2 rounded shadow"
-          }
-        >
-          {`Counter: ${selectedCountries.size}/${countryData.length}`}
+        <div className="absolute left-1/2 bottom-32 transform -translate-x-1/2 w-full max-w-xs z-[11000] bg-white p-2 rounded shadow flex justify-between">
+          <div className="text-black text-sm py-2 px-3 mx-1 rounded">
+            {`Counter: ${selectedCountries.size}/${countryData.length}`}
+          </div>
+          <button
+            onClick={changeTileLayer}
+            className="bg-purple-500 hover:bg-purple-700 text-sm text-white font-bold py-2 px-3 mx-1 rounded"
+          >
+            Change Map Layer
+          </button>
         </div>
       </div>
       <div className="flex-[0_1_15%] z-[1000]">

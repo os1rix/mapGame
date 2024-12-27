@@ -19,6 +19,7 @@ interface MapComponentProps {
   borders: GeoJsonObject
   rightCountries: Feature<Geometry, GeoJsonProperties>[]
   wrongCountries: Feature<Geometry, GeoJsonProperties>[]
+  tileLayerUrl: string
 }
 
 const MapComponent: React.FC<MapComponentProps> = ({
@@ -28,6 +29,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
   borders,
   rightCountries,
   wrongCountries,
+  tileLayerUrl,
 }) => {
   let zoom = 5
   if (currentPoint) {
@@ -50,7 +52,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
         style={{ height: "100vh", width: "100%" }}
       >
         <TileLayer
-          url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png"
+          url={tileLayerUrl}
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
         {currentShape.map((shape, index) => (
@@ -62,7 +64,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
               weight: 1.6,
               opacity: 1,
               fillColor: "blue",
-              fillOpacity: 0.3,
+              fillOpacity: 0.4,
             })}
           />
         ))}
@@ -75,7 +77,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
               weight: 0,
               opacity: 1,
               fillColor: "green",
-              fillOpacity: 2,
+              fillOpacity: 0.5,
             })}
           />
         ))}
@@ -88,7 +90,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
               weight: 0,
               opacity: 1,
               fillColor: "red",
-              fillOpacity: 1.7,
+              fillOpacity: 0.4,
             })}
           />
         ))}
