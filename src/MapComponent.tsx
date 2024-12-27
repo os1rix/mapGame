@@ -1,7 +1,7 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { MapContainer, TileLayer, GeoJSON, Marker } from "react-leaflet"
 import { Feature, Geometry, GeoJsonProperties, GeoJsonObject } from "geojson"
-import { Icon, map } from "leaflet"
+import { Icon } from "leaflet"
 import "leaflet/dist/leaflet.css"
 
 const smallIcon = new Icon({
@@ -31,7 +31,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
 }) => {
   let zoom = 5
   if (currentPoint) {
-    zoom = 7
+    zoom = 6.5
   }
 
   return (
