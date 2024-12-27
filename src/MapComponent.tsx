@@ -3,6 +3,8 @@ import { MapContainer, TileLayer, GeoJSON, Marker } from "react-leaflet"
 import { Feature, Geometry, GeoJsonProperties, GeoJsonObject } from "geojson"
 import { Icon } from "leaflet"
 import "leaflet/dist/leaflet.css"
+//@ts-expect-error no need for this error
+import big_borders from "./assets/maakuntarajat.js"
 
 const smallIcon = new Icon({
   iconUrl:
@@ -100,6 +102,15 @@ const MapComponent: React.FC<MapComponentProps> = ({
             color: "black",
             weight: 1.6,
             opacity: 0.3,
+          })}
+        />
+        <GeoJSON
+          data={big_borders}
+          style={() => ({
+            color: "black",
+            weight: 1.5,
+            opacity: 10,
+            fillOpacity: 0,
           })}
         />
         {currentPoint && <Marker position={currentPoint} icon={smallIcon} />}
