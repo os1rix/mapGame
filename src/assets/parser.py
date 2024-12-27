@@ -1,5 +1,5 @@
 import os
-import json
+import re
 
 def add_export_statements(folder_path):
     # Iterate through all files in the given folder
@@ -8,36 +8,43 @@ def add_export_statements(folder_path):
         if filename.endswith('.js'):
             file_path = os.path.join(folder_path, filename)
             
-            # Get the name without the .js extension
-            export_name = os.path.splitext(filename)[0]
-            
             # Read the file contents
             with open(file_path, 'r') as file:
                 content = file.read()
             
-            # Load the content as JSON
-            try:
-                geojson_data = json.loads(content)
-            except json.JSONDecodeError:
-                print(f"Error decoding JSON in file: {filename}")
-                continue
+            # Replace LineString with Polygon
+            # content = content.replace('"type": "LineString"', '"type": "Polygon"')
+            with open(file_path, 'r') as file:
+                content = file.read()
             
-            # Check if the geometry type is LineString and convert to Polygon
-            if geojson_data.get("geometry", {}).get("type") == "LineString":
+            # Use regex to find the coordinates section with double square brackets
+            pattern_start = r'\[\s*\[\s*'
+            pattern_end = r'\],\s*\]\s*'  # Matches the last closing double brackets at the end of the string
+            match_start = re.search(pattern_start, content)
+            match_end = re.search(pattern_end, content)
+            if not (match_start and match_end):
+                print("fucked up")
+            else:
+                end_index = match_end.start()
+                start_index = match_start.start()  # Index of the first character of match_start
+                # Extract the coordinates
+                coordinates = content[start_index:end_index+2]
+                
                 # Wrap the coordinates in an additional array
-                geojson_data["geometry"]["type"] = "Polygon"
-                geojson_data["geometry"]["coordinates"] = [
-                    geojson_data["geometry"]["coordinates"]
-                ]
+                new_coordinates = f'[[{coordinates[1:-1]}]'  # Remove the outer brackets and add new ones
+                
+                # Replace the old coordinates with the new ones
+                content = content[:start_index] + new_coordinates + content[end_index +2:]
+                # Index of the first character of match_end
+            # print(match_start)
+            # print(match_end)
             
-            # Convert back to JSON string
-            updated_content = json.dumps(geojson_data, indent=2)
             # Write back to the file
             with open(file_path, 'w') as file:
-                file.write(updated_content)
+                file.write(content)
             
             print(f"Processed file: {filename}")
 
 # Example usage
-folder_path = "c:/Users/silvo/code/mapGame/src/assets/areas"
+folder_path = "c:/Users/silvo/code/mapGame/src/assets/test_areas"
 add_export_statements(folder_path)
