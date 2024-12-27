@@ -5,6 +5,10 @@ import MapComponent from "./MapComponent"
 //@ts-expect-error works just fine :D
 import csvData from "./assets/Coordinates_with_shapes.js"
 
+// import bordersData from "./assets/BordersReOrder.js" // Import borders data
+//@ts-expect-error works just fine :D
+import bordersData from "./assets/Filtered_Borders_More_Than_25_Coordinates.js"
+
 const shapeFiles = Array.from({ length: 468 }, (_, i) => i).map(
   (num) => () => import(`./assets/areas/shape_${num}.js`)
 )
@@ -34,6 +38,13 @@ const GameBox = () => {
   const [selectedCountries, setSelectedCountries] = useState<Set<number>>(
     new Set()
   ) // Track selected countries
+  const [rightCountries, setRightCountries] = useState<
+    Feature<Geometry, GeoJsonProperties>[]
+  >([])
+  const [wrongCountries, setWrongCountries] = useState<
+    Feature<Geometry, GeoJsonProperties>[]
+  >([])
+  const [answered, setAnswered] = useState<boolean>(true)
 
   useEffect(() => {
     // Parse the CSV data
@@ -53,14 +64,25 @@ const GameBox = () => {
         data.shapes.every((shape) => !isNaN(shape))
       ) // Filter out any invalid entries
     setCountryData(parsedData)
+    console.log(parsedData)
   }, [])
 
   const showRandomShape = async () => {
+    if (!answered) {
+      setFeedbackVisible(true)
+      setFeedback("Try to guess first!")
+      setTimeout(() => {
+        setFeedbackVisible(false)
+      }, 3000)
+      return
+    }
+    setAnswered(false)
+    setAttempts(0)
+    setGuess("")
     // Ensure the country hasn't been selected yet
     if (selectedCountries.size >= countryData.length) {
       setSelectedCountries(new Set())
     }
-    setAttempts(0)
 
     let randomIndex
     do {
@@ -85,6 +107,7 @@ const GameBox = () => {
       setCurrentCountry(selectedCountry)
       setCurrentPoint(selectedCountry.latLng || null)
       setFeedback("")
+      console.log(selectedCountry)
     } catch (error) {
       console.error("Error loading shapes:", error)
     }
@@ -92,16 +115,19 @@ const GameBox = () => {
 
   const handleGuess = () => {
     setAttempts((prev) => prev + 1)
-    console.log(attempts)
     if (
       guess.trim().toLowerCase() ===
       currentCountry?.country.trim().toLowerCase()
     ) {
       setFeedback("Correct!")
+      setAnswered(true)
+      setRightCountries((prev) => [...prev, ...currentShape])
     } else {
       if (attempts >= 1) {
         // Check if it's the second attempt
-        setFeedback(`The country is ${currentCountry?.country}.`)
+        setFeedback(`The town is ${currentCountry?.country}.`)
+        setWrongCountries((prev) => [...prev, ...currentShape])
+        setAnswered(true)
       } else {
         setFeedback("Try again!")
       }
@@ -134,6 +160,9 @@ const GameBox = () => {
           currentShape={currentShape}
           shapeName={shapeName}
           currentPoint={currentPoint}
+          borders={bordersData}
+          wrongCountries={wrongCountries}
+          rightCountries={rightCountries}
         />
         {feedbackVisible && (
           <div
@@ -142,6 +171,13 @@ const GameBox = () => {
             {feedback}
           </div>
         )}
+        <div
+          className={
+            "absolute top-4 right-4 z-[1000] bg-white p-2 rounded shadow"
+          }
+        >
+          {`Counter: ${selectedCountries.size}/${countryData.length}`}
+        </div>
       </div>
       <div className="flex-[0_1_15%] z-[1000]">
         <AnswerBar
