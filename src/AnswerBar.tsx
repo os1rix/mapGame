@@ -25,7 +25,7 @@ const AnswerBar: React.FC<AnswerBarProps> = ({
           onClick={showRandomShape}
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-1 rounded"
         >
-          Show Random Country
+          Show Random Town
         </button>
         <button
           onClick={handleGuess}
