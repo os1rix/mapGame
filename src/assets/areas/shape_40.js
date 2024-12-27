@@ -2,7 +2,7 @@ const shape_40 = {
   "type": "Feature",
   "geometry": {
     "type": "Polygon",
-    "coordinates": [
+    "coordinates": [[
       [
         25.844956,
         61.801408
@@ -334,8 +334,7 @@ const shape_40 = {
       [
         25.844956,
         61.801408
-      ]
-    ]
+      ]]    ]
   },
   "properties": {}
 };

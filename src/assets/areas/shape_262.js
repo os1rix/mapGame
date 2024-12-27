@@ -2,7 +2,7 @@ const shape_262 = {
   "type": "Feature",
   "geometry": {
     "type": "Polygon",
-    "coordinates": [
+    "coordinates": [[
       [
         23.83523,
         62.494336
@@ -350,8 +350,7 @@ const shape_262 = {
       [
         23.83523,
         62.494336
-      ]
-    ]
+      ]]    ]
   },
   "properties": {}
 };

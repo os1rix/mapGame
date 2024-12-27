@@ -2,7 +2,7 @@ const shape_360 = {
   "type": "Feature",
   "geometry": {
     "type": "Polygon",
-    "coordinates": [
+    "coordinates": [[
       [
         23.5423,
         61.533339
@@ -254,8 +254,7 @@ const shape_360 = {
       [
         23.5423,
         61.533339
-      ]
-    ]
+      ]]    ]
   },
   "properties": {}
 };
