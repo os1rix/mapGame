@@ -3,8 +3,6 @@ import { MapContainer, TileLayer, GeoJSON, Marker } from "react-leaflet"
 import { Feature, Geometry, GeoJsonProperties, GeoJsonObject } from "geojson"
 import { Icon } from "leaflet"
 import "leaflet/dist/leaflet.css"
-//@ts-expect-error eeogbei
-import borders123 from "./assets/test_areas/shape_467_test.js"
 
 const smallIcon = new Icon({
   iconUrl:
@@ -56,7 +54,17 @@ const MapComponent: React.FC<MapComponentProps> = ({
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
         {currentShape.map((shape, index) => (
-          <GeoJSON key={`${shapeName}-${index}`} data={shape} />
+          <GeoJSON
+            key={`${shapeName}-${index}`}
+            data={shape}
+            style={() => ({
+              color: "black",
+              weight: 1.6,
+              opacity: 1,
+              fillColor: "blue",
+              fillOpacity: 0.3,
+            })}
+          />
         ))}
         {rightCountries.map((shape, index) => (
           <GeoJSON
@@ -64,10 +72,10 @@ const MapComponent: React.FC<MapComponentProps> = ({
             data={shape}
             style={() => ({
               color: "green",
-              weight: 2,
+              weight: 0,
               opacity: 1,
               fillColor: "green",
-              fillOpacity: 0.5,
+              fillOpacity: 2,
             })}
           />
         ))}
@@ -77,10 +85,10 @@ const MapComponent: React.FC<MapComponentProps> = ({
             data={shape}
             style={() => ({
               color: "red",
-              weight: 2,
+              weight: 0,
               opacity: 1,
               fillColor: "red",
-              fillOpacity: 0.5,
+              fillOpacity: 1.7,
             })}
           />
         ))}
@@ -88,17 +96,8 @@ const MapComponent: React.FC<MapComponentProps> = ({
           data={borders}
           style={() => ({
             color: "black",
-            weight: 0.2,
-            opacity: 1,
-          })}
-        />
-        <GeoJSON
-          data={borders123}
-          style={() => ({
-            color: "green",
-            weight: 3,
-            opacity: 1,
-            fillOpacity: 3,
+            weight: 1.6,
+            opacity: 0.3,
           })}
         />
         {currentPoint && <Marker position={currentPoint} icon={smallIcon} />}
