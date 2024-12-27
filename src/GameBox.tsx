@@ -194,7 +194,9 @@ const GameBox = () => {
             {feedback}
           </div>
         )}
-        <div className="absolute left-1/2 bottom-32 transform -translate-x-1/2 w-full max-w-xs z-[11000] bg-white p-2 rounded shadow flex justify-between">
+      </div>
+      <div className="flex-[0_1_15%] z-[1000]">
+        <div className="fixed left-1/2 bottom-32 transform -translate-x-1/2 w-full max-w-xs z-[11000] bg-white p-2 rounded shadow flex justify-between">
           <div className="text-black text-sm py-2 px-3 mx-1 rounded">
             {`Counter: ${selectedCountries.size}/${countryData.length}`}
           </div>
@@ -205,8 +207,6 @@ const GameBox = () => {
             Change Map Layer
           </button>
         </div>
-      </div>
-      <div className="flex-[0_1_15%] z-[1000]">
         <AnswerBar
           guess={guess}
           setGuess={setGuess}
