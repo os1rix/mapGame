@@ -1,7 +1,7 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { MapContainer, TileLayer, GeoJSON, Marker } from "react-leaflet"
-import { Feature, Geometry, GeoJsonProperties } from "geojson"
-import { Icon } from "leaflet"
+import { Feature, Geometry, GeoJsonProperties, GeoJsonObject } from "geojson"
+import { Icon, map } from "leaflet"
 import "leaflet/dist/leaflet.css"
 
 const smallIcon = new Icon({
@@ -16,26 +16,38 @@ interface MapComponentProps {
   currentShape: Feature<Geometry, GeoJsonProperties>[]
   shapeName: string
   currentPoint: [number, number] | null
+  borders: GeoJsonObject
+  rightCountries: Feature<Geometry, GeoJsonProperties>[]
+  wrongCountries: Feature<Geometry, GeoJsonProperties>[]
 }
 
 const MapComponent: React.FC<MapComponentProps> = ({
   currentShape,
   shapeName,
   currentPoint,
+  borders,
+  rightCountries,
+  wrongCountries,
 }) => {
+  let zoom = 5
+  if (currentPoint) {
+    zoom = 7
+  }
+
   return (
     <div className="relative">
       {/* THIS COMPONENT CAN BE TURNED ON FOR DEBUGGING PURPOSES */}
       {/* {shapeName && (
-        <div className="absolute top-4 right-4 z-[1000] bg-white p-2 rounded shadow">
+        <div className="absolute top-20 right-4 z-[1000] bg-white p-2 rounded shadow">
           Current Shape: {shapeName}
         </div>
       )} */}
       <MapContainer
-        center={[65.4978, 26.761]}
-        zoom={5}
+        key={currentPoint ? currentPoint.join(",") : "default"} // Force re-render on currentPoint change
+        center={currentPoint || [64.4978, 26.761]}
+        zoom={zoom}
         scrollWheelZoom={true}
-        style={{ height: "90vh", width: "100%" }}
+        style={{ height: "100vh", width: "100%" }}
       >
         <TileLayer
           url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png"
@@ -44,6 +56,36 @@ const MapComponent: React.FC<MapComponentProps> = ({
         {currentShape.map((shape, index) => (
           <GeoJSON key={`${shapeName}-${index}`} data={shape} />
         ))}
+        {rightCountries.map((shape, index) => (
+          <GeoJSON
+            key={`${shapeName}-${index}`}
+            data={shape}
+            style={() => ({
+              color: "green",
+              weight: 2,
+              opacity: 1,
+            })}
+          />
+        ))}
+        {wrongCountries.map((shape, index) => (
+          <GeoJSON
+            key={`${shapeName}-${index}`}
+            data={shape}
+            style={() => ({
+              color: "red",
+              weight: 2,
+              opacity: 1,
+            })}
+          />
+        ))}
+        <GeoJSON
+          data={borders}
+          style={() => ({
+            color: "black",
+            weight: 0.2,
+            opacity: 1,
+          })}
+        />
         {currentPoint && <Marker position={currentPoint} icon={smallIcon} />}
       </MapContainer>
     </div>
