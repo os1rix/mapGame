@@ -71,6 +71,15 @@ const GameBox = () => {
   }, [])
 
   const showRandomShape = async () => {
+    // Ensure the country hasn't been selected yet
+    if (selectedCountries.size >= countryData.length) {
+      setFeedbackVisible(true)
+      setFeedback("Nice job!\nReload the page to play again!")
+      setTimeout(() => {
+        setFeedbackVisible(false)
+      }, 4000)
+      return
+    }
     if (!answered) {
       setFeedbackVisible(true)
       setFeedback("Try to guess first!")
@@ -82,15 +91,6 @@ const GameBox = () => {
     setAnswered(false)
     setAttempts(0)
     setGuess("")
-    // Ensure the country hasn't been selected yet
-    if (selectedCountries.size >= countryData.length) {
-      setFeedbackVisible(true)
-      setFeedback("Nice job!\nReload the page to play again!")
-      setTimeout(() => {
-        setFeedbackVisible(false)
-      }, 4000)
-      return
-    }
 
     let randomIndex
     do {
@@ -122,6 +122,14 @@ const GameBox = () => {
   }
 
   const handleGuess = () => {
+    if (selectedCountries.size >= countryData.length) {
+      setFeedbackVisible(true)
+      setFeedback("Nice job!\nReload the page to play again!")
+      setTimeout(() => {
+        setFeedbackVisible(false)
+      }, 4000)
+      return
+    }
     setAttempts((prev) => prev + 1)
     if (
       guess.trim().toLowerCase() ===

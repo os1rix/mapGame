@@ -107,9 +107,9 @@ const MapComponent: React.FC<MapComponentProps> = ({
         <GeoJSON
           data={big_borders}
           style={() => ({
-            color: "black",
+            color: "blue",
             weight: 1.5,
-            opacity: 10,
+            opacity: 5,
             fillOpacity: 0,
           })}
         />
